@@ -96,13 +96,13 @@
     <Compile Include="Base\CapeCollectionPair.cs" />
     <Compile Include="Base\CapeOpenBaseObject.cs" />
     <Compile Include="CasterLocator.cs" />
+    <Compile Include="CasterLogger.cs" />
     <Compile Include="Enums\Phases.cs" />
     <Compile Include="Enums\PropertyBasis.cs" />
     <Compile Include="Enums\PropertyCategory.cs" />
     <Compile Include="Exceptions\ECapeErrorHResult.cs" />
     <Compile Include="Exceptions\ECapeUnknownException.cs" />
     <Compile Include="GlobalSuppressions.cs" />
-    <Compile Include="CasterLogger.cs" />
     <Compile Include="Parameters\CapeArrayParameter.cs" />
     <Compile Include="Parameters\CapeBooleanParameter.cs" />
     <Compile Include="Parameters\CapeIntParameter.cs" />
@@ -124,13 +124,13 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="CasterCore.snk" />
-    <None Include="log4net.config">
+    <None Include="NLog.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="log4net">
-      <Version>2.0.8</Version>
+    <PackageReference Include="NLog">
+      <Version>6.0.2</Version>
     </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -1,38 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Reflection;
+﻿using NLog;
+using System;
 using System.Runtime.ExceptionServices;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using log4net;
-using log4net.Appender;
-using log4net.Config;
-using log4net.Core;
 
 namespace CasterCore
 {
     public static class CasterLogger
     {
-        private static ILog log;
+        private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
 
         static CasterLogger()
         {
-            var assembly = typeof(CasterLogger).Assembly;
-            var directory = Path.GetDirectoryName(assembly.Location);
-            var configPath = Path.Combine(directory, "log4net.config");
-            if (File.Exists(configPath))
-            {
-                log4net.GlobalContext.Properties["CasterLogFolder"] = directory;
-                XmlConfigurator.ConfigureAndWatch(new FileInfo(configPath));
-            }
-            else
-            {
-                XmlConfigurator.Configure();
-            }
-            log = LogManager.GetLogger(typeof(CasterLogger));
             AppDomain.CurrentDomain.FirstChanceException += FirstChanceException;
             AppDomain.CurrentDomain.UnhandledException += UnhandledException;  // this method probably won't be called because the simulator will catch all errors
         }
@@ -57,67 +34,67 @@ namespace CasterCore
         {
             //var file = LogManager.GetRepository().GetAppenders().FirstOrDefault() as FileAppender;
             //MessageBox.Show(file.File, "test");
-            log.Debug(msg);
+            _logger.Debug(msg);
         }
 
         public static void DebugFormatted(string format, params object[] args)
         {
-            log.DebugFormat(format, args);
+            _logger.Debug(format, args);
         }
 
         public static void Info(object message)
         {
-            log.Info(message);
+            _logger.Info(message);
         }
 
         public static void InfoFormatted(string format, params object[] args)
         {
-            log.InfoFormat(format, args);
+            _logger.Info(format, args);
         }
 
         public static void Warn(object message)
         {
-            log.Warn(message);
+            _logger.Warn(message);
         }
 
-        public static void Warn(object message, Exception exception)
+        public static void Warn(string message, Exception exception)
         {
-            log.Warn(message, exception);
+            _logger.Warn(exception,message);
         }
 
         public static void WarnFormatted(string format, params object[] args)
         {
-            log.WarnFormat(format, args);
+            _logger.Warn(format, args);
         }
 
         public static void Error(object message)
         {
-            log.Error(message);
+            _logger.Error(message);
         }
 
-        public static void Error(object message, Exception exception)
+        public static void Error(string message, Exception exception)
         {
-            log.Error(message, exception);
+            _logger.Error(exception, message);
         }
 
         public static void ErrorFormatted(string format, params object[] args)
         {
-            log.ErrorFormat(format, args);
+            _logger.Error(format, args);
         }
 
         public static void Fatal(object message)
         {
-            log.Fatal(message);
+            _logger.Fatal(message);
         }
 
-        public static void Fatal(object message, Exception exception)
+        public static void Fatal(string message, Exception exception)
         {
-            log.Fatal(message, exception);
+            _logger.Fatal(exception,message);
         }
 
         public static void FatalFormatted(string format, params object[] args)
         {
-            log.FatalFormat(format, args);
+            _logger.Fatal(format, args);
         }
 
     }
